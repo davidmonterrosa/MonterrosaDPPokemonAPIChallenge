@@ -30,10 +30,10 @@ inputField.addEventListener("input", () => {
 toggleShinyBtn.addEventListener("click", () => {
     
     if (toggleShinyBtn.src.includes("shining.png") && (userInput != "")) {
-        toggleShinyBtn.src = "./assets/shining_filled.png";
+        toggleShinyBtn.src = "./assets/icons/shining_filled.png";
         pokemonSprite.src = `${pokemon.sprites.front_shiny}`;
     } else {
-        toggleShinyBtn.src = "./assets/shining.png";
+        toggleShinyBtn.src = "./assets/icons/shining.png";
         pokemonSprite.src = `${pokemon.sprites.front_default}`;
     }
 });

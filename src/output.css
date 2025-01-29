@@ -699,6 +699,12 @@
   .bg-\[url\(\/assets\/Pokemon_Background\.jpg\)\] {
     background-image: url(/assets/Pokemon_Background.jpg);
   }
+  .bg-\[url\(\/assets\/images\/Pokemon_Background\.jpg\)\] {
+    background-image: url(/assets/images/Pokemon_Background.jpg);
+  }
+  .bg-\[url\(\/assets\/imagesPokemon_Background\.jpg\)\] {
+    background-image: url(/assets/imagesPokemon_Background.jpg);
+  }
   .bg-cover {
     background-size: cover;
   }
