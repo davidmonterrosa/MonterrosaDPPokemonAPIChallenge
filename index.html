@@ -9,7 +9,7 @@
 
 
 </head>
-<body class="bg-[url(/assets/Pokemon_Background.jpg)] bg-center bg-no-repeat bg-cover bg-fixed">
+<body class="bg-[url(/assets/images/Pokemon_Background.jpg)] bg-center bg-no-repeat bg-cover bg-fixed">
     <main class="grid md:grid-cols-5 md:grid-rows-8">
         
         <!-- Searchbar, Favorites List Btn, and getRandomPokemon Btn -->
@@ -18,15 +18,15 @@
             <div class="flex justify-evenly grid-rows-1 py-4 ps-20 pe-32 md:ps-20 bg-white/75 border rounded-2xl">
                 <div class=" inset-y-0 start-0 flex items-center ps-3">
                     <button id="searchBtn">
-                        <img class="w-[1.563rem] h-[1.563rem] md:w-[3.125rem] md:h-[3.125rem]" src="./assets/magnifying_glass.svg" alt="magnifying glass icon">
+                        <img class="w-[1.563rem] h-[1.563rem] md:w-[3.125rem] md:h-[3.125rem]" src="./assets/icons/magnifying_glass.svg" alt="magnifying glass icon">
                     </button>
                 </div>
                 <input type="search" id="inputField" class="block w-full md:h-[108px] text-base md:text-2xl text-gray-900 bg-transparent border-0 rounded-2xl   dark:placeholder-gray-400 dark:text-white" placeholder="Search by name or Pokedex Number" required />
                 <button class=" end-18 bottom-5 md:end-18 md:bottom-7">
-                    <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/pokeball.png" alt="Favorites List Pokeball Icon">
+                    <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/pokeball.png" alt="Favorites List Pokeball Icon">
                 </button>   
                 <button class=" end-2.5 bottom-5 md:end-3 md:bottom-7">
-                    <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/shuffle-solid.svg" alt="Get Random Pokemon Shuffle icon">
+                    <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/shuffle-solid.svg" alt="Get Random Pokemon Shuffle icon">
                 </button>
             </div>
         </header>
@@ -34,9 +34,9 @@
         <!-- Pokemon Information Area -->
         <section class="md:row-start-3 md:row-span-5">
             <div class="flex justify-between">
-                <img class="w-16 grayscale" src="./assets/pokeball.png" alt="Favorite Btn Pokeball">
+                <img class="w-16 grayscale" src="./assets/icons/pokeball.png" alt="Favorite Btn Pokeball">
                 <p id="idNumber">#Id</p>
-                <img id="toggleShinyBtn" class="w-16" src="./assets/shining.png" alt="Toggle shiny view button icon">
+                <img id="toggleShinyBtn" class="w-16" src="./assets/icons/shining.png" alt="Toggle shiny view button icon">
             </div>
             <div>
                 <h1 id="pokemonName">Pokemon Name</h1>
