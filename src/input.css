@@ -1,0 +1,9 @@
+@import "tailwindcss";
+/* @theme {
+    --font-display: "Press Start 2P", "sans-serif"; 
+} */
+
+@font-face {
+    font-family: "Press_Start_2P";
+    /* src: url(); */
+}
