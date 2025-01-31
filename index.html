@@ -25,24 +25,55 @@
                 <button class=" end-18 bottom-5 md:end-18 md:bottom-7">
                     <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/pokeball.png" alt="Favorites List Pokeball Icon">
                 </button>   
-                <button class=" end-2.5 bottom-5 md:end-3 md:bottom-7">
+                <button id="getRandomPokemonBtn" class=" end-2.5 bottom-5 md:end-3 md:bottom-7">
                     <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/shuffle-solid.svg" alt="Get Random Pokemon Shuffle icon">
                 </button>
             </div>
         </header>
 
         <!-- Pokemon Information Area -->
-        <section class="md:row-start-3 md:row-span-5">
+        <section id="pokemonInfoArea" class="grid auto-rows-min md:row-start-3 md:row-span-5 md:col-start-2 md:col-span-3 bg-white/75 rounded-2xl p-8">
             <div class="flex justify-between">
-                <img class="w-16 grayscale" src="./assets/icons/pokeball.png" alt="Favorite Btn Pokeball">
+                <img id="addToFavoritesBtn" class="w-16 grayscale opacity-50" src="./assets/icons/pokeball.png" alt="Favorite Btn Pokeball">
                 <p id="idNumber">#Id</p>
                 <img id="toggleShinyBtn" class="w-16" src="./assets/icons/shining.png" alt="Toggle shiny view button icon">
             </div>
-            <div>
-                <h1 id="pokemonName">Pokemon Name</h1>
-                <img id="pokemonSprite" src="" alt="Pokemon Placeholder">
-            </div>
+            <article>
+                <!-- Name, Sprite, and Type Area -->
+                <div class="grid grid-cols-1 auto-rows-3">
+                    <h1 id="pokemonName">Pokemon Name</h1>
+                    <img id="pokemonSprite" class="object-cover w-64 h-64" src="./assets/images/image.png" alt="Pokemon Placeholder">
+                    <div id="typeListArea" class="flex justify-center">
+                        <div id="typePill1" class="flex justify-center items-center border rounded-full py-1.5 px-2.5 bg-pokemonfire">
+                            <p id="pokemonType1">type</p>
+                        </div>
+                        <div id="typePill2" class="hidden justify-center items-center border rounded-full py-1.5 px-2.5">
+                            <p id="pokemonType2">secondType</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Information Area -->
+                <div>
+                    <p><b>Where:</b> <span id="encounterText">Pallet Town Area</span></p>
+                    <p><b>Abilities:</b> <span id="abilitiesText">blaze, solar-power</span></p>
+                    <p><b>Moves:</b> <span id="movesText">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium tenetur debitis vitae animi accusamus temporibus quam impedit eveniet dignissimos et, aspernatur, tempora repellendus? Veniam eum velit at non libero quaerat?
+                        Laboriosam corrupti obcaecati quis esse accusamus voluptatibus voluptate assumenda, quod architecto odio corporis, eligendi sed in suscipit laborum quisquam alias, dolorum cum nemo nesciunt! Laudantium, tenetur. Rerum autem quisquam quia.</span> </p>
+                </div>
+            </article>
+
+            <!-- Evolutions Display Area -->
+            <article class="flex overflow-scroll">
+                <img src="./assets/images/image.png" alt="">
+                <img src="./assets/images/charmeleon.png" alt="">
+                <img src="./assets/images/Charizard.png" alt="">
+            </article>
         </section>
+
+        <!-- Out of range warning -->
+        <article id="outOfRangeMessage" class="hidden justify-center items-center md:row-start-3 md:row-span-5 md:col-start-2 md:col-span-3 bg-white/75 rounded-2xl p-8">
+            <h1 id="outOfRangeMessageText" class="text-4xl">This application showcases pokemon from Generations 1 through 5 (ID #s &lt; 650). The pokemon you entered appears to be from a later generation. Try searching for a different Pokemon! :&#41;</h1>
+        </article>
 
     </main>
 
