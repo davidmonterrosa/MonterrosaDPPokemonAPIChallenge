@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @theme {
     --color-pokemonnormal: #A4ACAF; 
     --color-pokemonfire: #FD7D25; 
@@ -18,7 +19,3 @@
     --color-pokemondark: #717171; 
     --color-pokemonsteel: #9EB8B8; 
 }
-
-/* @font-face {
-    font-family: "Press_Start_2P";
-} */
