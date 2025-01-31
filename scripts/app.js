@@ -15,7 +15,9 @@ const abilitiesText = document.getElementById("abilitiesText");
 const movesText = document.getElementById("movesText");
 const getRandomPokemonBtn = document.getElementById("getRandomPokemonBtn");
 const pokemonInfoArea = document.getElementById("pokemonInfoArea");
-const outOfRangeMessage = document.getElementById("outOfRangeMessage");
+const errorMessage = document.getElementById("errorMessage");
+const errorMessageText = document.getElementById("errorMessageText");
+const favoritesModalArea = document.getElementById("favoritesModalArea");
 
 
 // Variables
@@ -23,6 +25,8 @@ let userInput = "";
 let pokemon = {};
 let pokemonId = "";
 let localStorageElementsCount = 0;
+const errorMessageOutOfBounds = "This application showcases pokemon from Generations 1 through 5 (ID #s < 650). The pokemon you entered appears to be from a later generation. Try searching for a different Pokemon!";
+const errorMessageSearchQuery = "There was an issue with your search query. Please check the spelling of your query and try again."
 
 
 // Functions
@@ -74,26 +78,31 @@ function getPokemonMovesList(inputArray) {
     return tempArray.join(", ");
 }
 
-function getPokemonTypes(inputArray) {
-    console.log(inputArray.length);
-    if(inputArray.length > 1) {
+function getPokemonTypes(inputPokemon) {
+    if(inputPokemon["past_types"].length > 0) {
+        typePill2.classList.add("hidden");
+        removeBackgroundColors(typePill1);
+        removeBackgroundColors(pokemonSprite);
+        pokemonSprite.classList.add(`bg-pokemon${inputPokemon.past_types[0].types[0].type.name}`);
+        typePill1.classList.add(`bg-pokemon${inputPokemon.past_types[0].types[0].type.name}`);
+        pokemonType1.innerText = `${inputPokemon.past_types[0].types[0].type.name}`;
+    } else if(inputPokemon["types"].length > 1) {
         typePill2.classList.remove("hidden");
         removeBackgroundColors(typePill1);
         removeBackgroundColors(typePill2);
         removeBackgroundColors(pokemonSprite);
-        pokemonSprite.classList.add(`bg-pokemon${inputArray[0].type.name}`);
-        typePill1.classList.add(`bg-pokemon${inputArray[0].type.name}`);
-        typePill2.classList.add(`bg-pokemon${inputArray[1].type.name}`);
-        pokemonType1.innerText = `${inputArray[0].type.name}`;
-        pokemonType2.innerText = `${inputArray[1].type.name}`;
+        pokemonSprite.classList.add(`bg-pokemon${inputPokemon.types[0].type.name}`);
+        typePill1.classList.add(`bg-pokemon${inputPokemon.types[0].type.name}`);
+        typePill2.classList.add(`bg-pokemon${inputPokemon.types[1].type.name}`);
+        pokemonType1.innerText = `${inputPokemon.types[0].type.name}`;
+        pokemonType2.innerText = `${inputPokemon.types[1].type.name}`;
     } else {
         typePill2.classList.add("hidden");
-        removeBackgroundColors(pokemonSprite);
-        pokemonSprite.classList.add(`bg-pokemon${inputArray[0].type.name}`);
-        console.log(`${inputArray[0].type.name}`);
         removeBackgroundColors(typePill1);
-        typePill1.classList.add(`bg-pokemon${inputArray[0].type.name}`);
-        pokemonType1.innerText = `${inputArray[0].type.name}`;
+        removeBackgroundColors(pokemonSprite);
+        pokemonSprite.classList.add(`bg-pokemon${inputPokemon.types[0].type.name}`);
+        typePill1.classList.add(`bg-pokemon${inputPokemon.types[0].type.name}`);
+        pokemonType1.innerText = `${inputPokemon.types[0].type.name}`;
     }
 }
 
@@ -107,28 +116,99 @@ function removeBackgroundColors(inputElementId) {
     });
 }
 
-// function getEvolutionChain(pokemon)
-// {
+function createFavoritesList() {
+    let favoritesList = getFromLocalStorage();
+    console.log(favoritesList);
+    favoriteModalArea.innerHTML = "";
+    favoritesList.map((starredCity) => {
+        // cardDiv.remove();
+        // favoriteCityCardsCount++;
+        console.log(favoriteCityCardsCount)
+        console.log(localStorageElementsCount);
+        if(favoriteCityCardsCount <= localStorageElementsCount) {
+            console.log(`${starredCity}`)
+            
+            let cardDiv = document.createElement('div');
+            cardDiv.className = "favoritesListCard";
+            
+            let cityNameDiv = document.createElement('div');
+            
+            let cityNameP = document.createElement('p');
+            cityNameP.className = "favoriteCityText";
+            cityNameP.innerText = searchStringToCityName(starredCity);
+            cityNameDiv.addEventListener('click', () => {
+                getWeatherData(starredCity);
+                getFiveDayForecast(starredCity);
+            });
+            
+            let filledFavoriteStar = document.createElement('img');
+            filledFavoriteStar.src = "./assets/images/favoriteIconFilled.svg";
+            filledFavoriteStar.alt = "Favorite Icon";
+            filledFavoriteStar.className = "favoriteIcon-Style";
+            
+            filledFavoriteStar.addEventListener('click', function () {
+                // localStorageElementsCount--;
+                // favoriteCityCardsCount--;
+                removeFromLocalStorage(starredCity);
+                addFavoriteIcon.src = "./assets/images/favoriteIcon.svg";
+                cardDiv.remove();
+            })
     
+            let weatherDiv = document.createElement('div');
+    
+            let weatherP = document.createElement('p');
+            weatherP.className = "favoriteCityWeatherText";
+            // weatherP.innerText = `${Math.round(starredCityData.main.temp_max)}° / ${Math.round(starredCityData.main.temp_min)}°`
+    
+            offcanvasCardArea.appendChild(cardDiv);
+    
+            cardDiv.appendChild(cityNameDiv);
+            cardDiv.appendChild(filledFavoriteStar);
+            cardDiv.appendChild(weatherDiv);
+    
+            cityNameDiv.appendChild(cityNameP);
+            weatherDiv.appendChild(weatherP);
+        }
+    })
+}
+
+// const getEvolutionChain = async (pokemon) => {
+//     console.log(pokemon.species.url);
+//     const speciesUrl = pokemon.species.url;
+//     const response = await fetch(speciesUrl);
+//     const speciesData = await response.json();
+//     console.log(speciesData);
+//     console.log(speciesData.evolution_chain.url);
+//     const evolutionChainUrl = speciesData.evolution_chain.url;
+//     const evolutionChainResponse = await fetch(evolutionChainUrl);
+//     const evolutionChain = await evolutionChainResponse.json();
+//     console.log(evolutionChain);
+//     const evolutionChain.chain.species.url
 // }
 
 // Event Listeners
 searchBtn.addEventListener("click", async () => {
-    // console.log("Test")
     const searchQuery = userInput.trim().toLowerCase();
-    // console.log(searchQuery);
     pokemon = await getPokemon(searchQuery);
     pokemonId = `${pokemon.id}`;
-    if(parseInt(pokemonId) < 649) {
+    if(pokemon == "error") {
+        pokemonInfoArea.classList.add("hidden");
+        pokemonInfoArea.classList.remove("grid");
+        errorMessage.classList.remove("hidden");
+        errorMessage.classList.add("flex");
+        errorMessageText.innerText = errorMessageSearchQuery;
+    } else if(parseInt(pokemonId) <= 649) {
         pokemonInfoArea.classList.remove("hidden");
         pokemonInfoArea.classList.add("grid");
-        outOfRangeMessage.classList.add("hidden");
-        outOfRangeMessage.classList.remove("flex");
+        errorMessage.classList.add("hidden");
+        errorMessage.classList.remove("flex");
         idNumber.innerText = `#${pokemon.id}`;
         pokemonName.innerText = `${pokemon.name}`;
         pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
-        getPokemonTypes(pokemon.types);
-        
+        getPokemonTypes(pokemon);
+
+        // getEvolutionChain(pokemon);
+
         encounterText.innerText = await getLocationData(pokemon.id);
         abilitiesText.innerText = getPokemonAbilitiesList(pokemon.abilities);
         movesText.innerText = getPokemonMovesList(pokemon.moves);
@@ -136,22 +216,26 @@ searchBtn.addEventListener("click", async () => {
         pokemonInfoArea.classList.add("hidden");
         pokemonInfoArea.classList.remove("grid");
 
-        outOfRangeMessage.classList.remove("hidden");
-        outOfRangeMessage.classList.add("flex");
+        // getEvolutionChain(pokemon);
+
+        errorMessage.classList.remove("hidden");
+        errorMessage.classList.add("flex");
+        errorMessageText.innerText = errorMessageOutOfBounds;
     }
 });
 
 getRandomPokemonBtn.addEventListener("click", async () => {
         let randomId = Math.floor(Math.random() * 650);
-        console.log(randomId);
         pokemon = await getPokemon(randomId);
         pokemonId = `${pokemon.id}`;
             pokemonInfoArea.classList.remove("hidden");
             pokemonInfoArea.classList.add("grid");
+            errorMessage.classList.add("hidden");
+            errorMessage.classList.remove("flex");
             idNumber.innerText = `#${pokemon.id}`;
             pokemonName.innerText = `${pokemon.name}`;
             pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
-            getPokemonTypes(pokemon.types);
+            getPokemonTypes(pokemon);
             encounterText.innerText = await getLocationData(pokemon.id);
             abilitiesText.innerText = getPokemonAbilitiesList(pokemon.abilities);
             movesText.innerText = getPokemonMovesList(pokemon.moves);
@@ -159,7 +243,6 @@ getRandomPokemonBtn.addEventListener("click", async () => {
 
 inputField.addEventListener("input", () => {
     userInput = inputField.value;
-    // console.log(userInput);
 });
 
 toggleShinyBtn.addEventListener("click", () => {
@@ -189,8 +272,10 @@ addToFavoritesBtn.addEventListener("click", () => {
 // Api Calls
 const getPokemon = async (nameOrId) => {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameOrId}`);
+    if(!response.ok) {
+        return "error";
+    }
     const data = await response.json();
-    // console.log(data);
     return data;
 }
 

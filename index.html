@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon API Challenge</title>
     <link rel="stylesheet" href="./src/output.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="icon" href="./assets/icons/pokeball.png">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.css" rel="stylesheet" />
 
 
@@ -22,7 +24,7 @@
                     </button>
                 </div>
                 <input type="search" id="inputField" class="block w-full md:h-[108px] text-base md:text-2xl text-gray-900 bg-transparent border-0 rounded-2xl   dark:placeholder-gray-400 dark:text-white font-montserrat md:placeholder:font-montserrat md:placeholder:text-2xl" placeholder="Search by name or Pokedex Number" required />
-                <button class=" end-18 bottom-5 md:end-18 md:bottom-7">
+                <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button" class="end-18 bottom-5 md:end-18 md:bottom-7">
                     <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/pokeball.png" alt="Favorites List Pokeball Icon">
                 </button>   
                 <button id="getRandomPokemonBtn" class=" end-2.5 bottom-5 md:end-3 md:bottom-7">
@@ -30,6 +32,36 @@
                 </button>
             </div>
         </header>
+
+        <!-- Favorites Modal -->
+        <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                        <h3 class="text-xl font-montserrat text-gray-900 dark:text-white">
+                            Favorites
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div id="favoritesModalArea" class="p-4 md:p-5 space-y-4">
+                        <div class="rounded-full bg-gray-500 flex justify-center items-center py-4">
+                            <p id="favePokemonName" class="text-center">Pokemon</p>
+                            <button>
+                                <img id="deletePokemonBtn" class="fill-black" src="./assets/icons/delete-left-solid.svg" alt="Remove Pokemon from list">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Pokemon Information Area -->
         <section id="pokemonInfoArea" class="grid auto-rows-min md:row-start-3 md:row-span-5 md:col-start-2 md:col-span-3 bg-white/75 rounded-2xl p-8">
@@ -58,7 +90,7 @@
                 <div class="col-start-2">
                     <p><b>Where:</b> <span id="encounterText">Pallet Town Area</span></p>
                     <p><b>Abilities:</b> <span id="abilitiesText">blaze, solar-power</span></p>
-                    <p><b>Moves:</b> <span id="movesText">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium tenetur debitis vitae animi accusamus temporibus quam impedit eveniet dignissimos et, aspernatur, tempora repellendus? Veniam eum velit at non libero quaerat?
+                    <p class="xl:max-h-60 xl:overflow-y-scroll"><b>Moves:</b> <span id="movesText" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium tenetur debitis vitae animi accusamus temporibus quam impedit eveniet dignissimos et, aspernatur, tempora repellendus? Veniam eum velit at non libero quaerat?
                         Laboriosam corrupti obcaecati quis esse accusamus voluptatibus voluptate assumenda, quod architecto odio corporis, eligendi sed in suscipit laborum quisquam alias, dolorum cum nemo nesciunt! Laudantium, tenetur. Rerum autem quisquam quia.</span> </p>
                 </div>
             </article>
@@ -72,8 +104,8 @@
         </section>
 
         <!-- Out of range warning -->
-        <article id="outOfRangeMessage" class="hidden justify-center items-center md:row-start-3 md:row-span-5 md:col-start-2 md:col-span-3 bg-white/75 rounded-2xl p-8">
-            <h1 id="outOfRangeMessageText" class="text-4xl">This application showcases pokemon from Generations 1 through 5 (ID #s &lt; 650). The pokemon you entered appears to be from a later generation. Try searching for a different Pokemon! :&#41;</h1>
+        <article id="errorMessage" class="hidden justify-center items-center md:row-start-3 md:row-span-5 md:col-start-2 md:col-span-3 bg-white/75 rounded-2xl p-8">
+            <h1 id="errorMessageText" class="text-4xl">This application showcases pokemon from Generations 1 through 5 (ID #s &lt; 650). The pokemon you entered appears to be from a later generation. Try searching for a different Pokemon! :&#41;</h1>
         </article>
 
     </main>
