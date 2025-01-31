@@ -21,7 +21,7 @@
                         <img class="w-[1.563rem] h-[1.563rem] md:w-[3.125rem] md:h-[3.125rem]" src="./assets/icons/magnifying_glass.svg" alt="magnifying glass icon">
                     </button>
                 </div>
-                <input type="search" id="inputField" class="block w-full md:h-[108px] text-base md:text-2xl text-gray-900 bg-transparent border-0 rounded-2xl   dark:placeholder-gray-400 dark:text-white" placeholder="Search by name or Pokedex Number" required />
+                <input type="search" id="inputField" class="block w-full md:h-[108px] text-base md:text-2xl text-gray-900 bg-transparent border-0 rounded-2xl   dark:placeholder-gray-400 dark:text-white font-montserrat md:placeholder:font-montserrat md:placeholder:text-2xl" placeholder="Search by name or Pokedex Number" required />
                 <button class=" end-18 bottom-5 md:end-18 md:bottom-7">
                     <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/pokeball.png" alt="Favorites List Pokeball Icon">
                 </button>   
@@ -38,11 +38,12 @@
                 <p id="idNumber">#Id</p>
                 <img id="toggleShinyBtn" class="w-16" src="./assets/icons/shining.png" alt="Toggle shiny view button icon">
             </div>
-            <article>
+            <article class=" xl:grid xl:grid-cols-2">
                 <!-- Name, Sprite, and Type Area -->
-                <div class="grid grid-cols-1 auto-rows-3">
+                <div class="grid grid-cols-1 auto-rows-3 xl:col-start-1 place-items-center">
                     <h1 id="pokemonName">Pokemon Name</h1>
-                    <img id="pokemonSprite" class="object-cover w-64 h-64" src="./assets/images/image.png" alt="Pokemon Placeholder">
+                    <!-- <img src="" alt=""> -->
+                    <img id="pokemonSprite" class="object-cover w-64 h-64 xl:min-w-80 xl:h-80 rounded-2xl" src="./assets/images/image.png" alt="Pokemon Placeholder">
                     <div id="typeListArea" class="flex justify-center">
                         <div id="typePill1" class="flex justify-center items-center border rounded-full py-1.5 px-2.5 bg-pokemonfire">
                             <p id="pokemonType1">type</p>
@@ -54,7 +55,7 @@
                 </div>
 
                 <!-- Text Information Area -->
-                <div>
+                <div class="col-start-2">
                     <p><b>Where:</b> <span id="encounterText">Pallet Town Area</span></p>
                     <p><b>Abilities:</b> <span id="abilitiesText">blaze, solar-power</span></p>
                     <p><b>Moves:</b> <span id="movesText">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium tenetur debitis vitae animi accusamus temporibus quam impedit eveniet dignissimos et, aspernatur, tempora repellendus? Veniam eum velit at non libero quaerat?

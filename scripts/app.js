@@ -27,7 +27,6 @@ let localStorageElementsCount = 0;
 
 // Functions
 function saveToLocalStorage(pokemonId) {
-    // console.log(`Saving this pokemon id# to local storage ${pokemonId}`);
     let favoritesListArr = getFromLocalStorage();
 
     if (!favoritesListArr.includes(`${pokemonId}`)) {
@@ -79,16 +78,18 @@ function getPokemonTypes(inputArray) {
     console.log(inputArray.length);
     if(inputArray.length > 1) {
         typePill2.classList.remove("hidden");
-        console.log(`${inputArray[0].type.name}`);
-        console.log(`${inputArray[1].type.name}`);
         removeBackgroundColors(typePill1);
         removeBackgroundColors(typePill2);
+        removeBackgroundColors(pokemonSprite);
+        pokemonSprite.classList.add(`bg-pokemon${inputArray[0].type.name}`);
         typePill1.classList.add(`bg-pokemon${inputArray[0].type.name}`);
         typePill2.classList.add(`bg-pokemon${inputArray[1].type.name}`);
         pokemonType1.innerText = `${inputArray[0].type.name}`;
         pokemonType2.innerText = `${inputArray[1].type.name}`;
     } else {
         typePill2.classList.add("hidden");
+        removeBackgroundColors(pokemonSprite);
+        pokemonSprite.classList.add(`bg-pokemon${inputArray[0].type.name}`);
         console.log(`${inputArray[0].type.name}`);
         removeBackgroundColors(typePill1);
         typePill1.classList.add(`bg-pokemon${inputArray[0].type.name}`);
@@ -105,12 +106,11 @@ function removeBackgroundColors(inputElementId) {
         }
     });
 }
-// test();
 
-function getEvolutionChain(pokemon)
-{
+// function getEvolutionChain(pokemon)
+// {
     
-}
+// }
 
 // Event Listeners
 searchBtn.addEventListener("click", async () => {
@@ -141,8 +141,20 @@ searchBtn.addEventListener("click", async () => {
     }
 });
 
-getRandomPokemonBtn.addEventListener("click", () => {
-
+getRandomPokemonBtn.addEventListener("click", async () => {
+        let randomId = Math.floor(Math.random() * 650);
+        console.log(randomId);
+        pokemon = await getPokemon(randomId);
+        pokemonId = `${pokemon.id}`;
+            pokemonInfoArea.classList.remove("hidden");
+            pokemonInfoArea.classList.add("grid");
+            idNumber.innerText = `#${pokemon.id}`;
+            pokemonName.innerText = `${pokemon.name}`;
+            pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
+            getPokemonTypes(pokemon.types);
+            encounterText.innerText = await getLocationData(pokemon.id);
+            abilitiesText.innerText = getPokemonAbilitiesList(pokemon.abilities);
+            movesText.innerText = getPokemonMovesList(pokemon.moves);
 });
 
 inputField.addEventListener("input", () => {

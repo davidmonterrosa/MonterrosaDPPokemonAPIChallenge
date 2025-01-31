@@ -17,5 +17,8 @@
     --color-pokemonghost: #7B62A3; 
     --color-pokemondragon: #F16E58; 
     --color-pokemondark: #717171; 
-    --color-pokemonsteel: #9EB8B8; 
+    --color-pokemonsteel: #9EB8B8;
+    
+    --font-poppins: "Poppins", sans-serif; 
+    --font-montserrat: "Montserrat", sans-serif; 
 }
