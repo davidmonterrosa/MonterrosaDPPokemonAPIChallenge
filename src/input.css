@@ -1,8 +1,24 @@
 @import "tailwindcss";
-/* @theme {
-    --font-display: "Press Start 2P", "sans-serif"; 
-} */
-
-@font-face {
-    font-family: "Press_Start_2P";
+@theme {
+    --color-pokemonnormal: #A4ACAF; 
+    --color-pokemonfire: #FD7D25; 
+    --color-pokemonwater: #4592C4; 
+    --color-pokemonelectric: #EED536; 
+    --color-pokemongrass: #9BCD50; 
+    --color-pokemonice: #51C4E7; 
+    --color-pokemonfighting: #D56723; 
+    --color-pokemonpoison: #BA80CA; 
+    --color-pokemonground: #AC9943; 
+    --color-pokemonflying: #889AFF; 
+    --color-pokemonpsychic: #F367B9; 
+    --color-pokemonbug: #739F3F; 
+    --color-pokemonrock: #A48C21; 
+    --color-pokemonghost: #7B62A3; 
+    --color-pokemondragon: #F16E58; 
+    --color-pokemondark: #717171; 
+    --color-pokemonsteel: #9EB8B8; 
 }
+
+/* @font-face {
+    font-family: "Press_Start_2P";
+} */
