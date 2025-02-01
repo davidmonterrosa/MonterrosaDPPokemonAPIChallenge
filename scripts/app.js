@@ -234,36 +234,51 @@ const getEvolutionChain = async (pokemon) => {
     baseFormDisplayArea.innerHTML = "";
     firstEvolutionDisplayArea.innerHTML = "";
     secondEvolutionDisplayArea.innerHTML = "";
-    let firstEvo =  document.createElement('img'); 
-    firstEvo.src = `${firstEvolution.sprites.other["official-artwork"].front_default}`;
-    firstEvo.alt = "Base Form";
-    firstEvo.className = "xl:size-40 size-30"
-    baseFormDisplayArea.appendChild(firstEvo);
+    if(firstEvolution != "error") {
+        let firstEvo =  document.createElement('img'); 
+        firstEvo.src = `${firstEvolution.sprites.other["official-artwork"].front_default}`;
+        firstEvo.alt = "Base Form";
+        firstEvo.className = "xl:size-40 size-30"
+        baseFormDisplayArea.appendChild(firstEvo);
 
-    for(let i = 0; i < evolutionChain.chain.evolves_to.length; i++) {
-        const secondEvolution = await getPokemon(evolutionChain.chain.evolves_to[i].species.name);
-        if(secondEvolution.id <= 649) {
-            let secondEvo =  document.createElement('img'); 
-            secondEvo.src = `${secondEvolution.sprites.other["official-artwork"].front_default}`;
-            secondEvo.alt = "First evolution";
-            secondEvo.className = "xl:size-40 size-30"
+        if(evolutionChain.chain.evolves_to.length == 0) {
+            let secondEvo =  document.createElement('p');
+            secondEvo.innerText = "N/A"; 
             firstEvolutionDisplayArea.appendChild(secondEvo);
-        }
-        
-        for(let j = 0; j < evolutionChain.chain.evolves_to[i].evolves_to.length; j++) {
-            const thirdEvolution = await getPokemon(evolutionChain.chain.evolves_to[i].evolves_to[j].species.name);
-            if(thirdEvolution.id <= 649) {
-                let thirdEvo =  document.createElement('img'); 
-                thirdEvo.src = `${thirdEvolution.sprites.other["official-artwork"].front_default}`;
-                thirdEvo.alt = "First evolution";
-                thirdEvo.className = "xl:size-40 size-30"
-                secondEvolutionDisplayArea.appendChild(thirdEvo);
+        } else {
+            for(let i = 0; i < evolutionChain.chain.evolves_to.length; i++) {
+                const secondEvolution = await getPokemon(evolutionChain.chain.evolves_to[i].species.name);
+                if(secondEvolution.id <= 649) {
+                    let secondEvo =  document.createElement('img'); 
+                    secondEvo.src = `${secondEvolution.sprites.other["official-artwork"].front_default}`;
+                    secondEvo.alt = "First evolution";
+                    secondEvo.className = "xl:size-40 size-30"
+                    firstEvolutionDisplayArea.appendChild(secondEvo);
+                }
+                if(evolutionChain.chain.evolves_to[i].evolves_to.length == 0) {
+                    let thirdEvo =  document.createElement('p');
+                    thirdEvo.innerText = "N/A"; 
+                    secondEvolutionDisplayArea.appendChild(thirdEvo);
+                } else {
+                    for(let j = 0; j < evolutionChain.chain.evolves_to[i].evolves_to.length; j++) {
+                        const thirdEvolution = await getPokemon(evolutionChain.chain.evolves_to[i].evolves_to[j].species.name);
+                        if(thirdEvolution.id <= 649) {
+                            let thirdEvo =  document.createElement('img'); 
+                            thirdEvo.src = `${thirdEvolution.sprites.other["official-artwork"].front_default}`;
+                            thirdEvo.alt = "First evolution";
+                            thirdEvo.className = "xl:size-40 size-30"
+                            secondEvolutionDisplayArea.appendChild(thirdEvo);
+                        }
+                
+                    }
+                }
             }
-    
         }
+    } else {
+        let firstEvo =  document.createElement('p');
+        firstEvo.innerText = "N/A"; 
+        baseFormDisplayArea.appendChild(firstEvo);
     }
-    
-
 }
 
 // Event Listeners
