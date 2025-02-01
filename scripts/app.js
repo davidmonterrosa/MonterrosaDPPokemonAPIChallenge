@@ -278,7 +278,7 @@ searchBtn.addEventListener("click", async () => {
         errorMessage.classList.add("flex");
         errorMessageText.innerText = errorMessageSearchQuery;
     } else if(parseInt(pokemonId) <= 649) {
-        toggleShinyBtn.src = "./assets/icons/shining.png"
+        toggleShinyBtn.src = "./assets/icons/shining.png";
         let favoritesListArr = getFromLocalStorage();
         if (!favoritesListArr.includes(pokemon.name)) {
             addToFavoritesBtn.classList.add("grayscale");
@@ -318,6 +318,7 @@ displayFavoritesBtn.addEventListener("click", () => {
 });
 
 getRandomPokemonBtn.addEventListener("click", async () => {
+        toggleShinyBtn.src = "./assets/icons/shining.png";
         let randomId = Math.floor(Math.random() * 650);
         pokemon = await getPokemon(randomId);
         let favoritesListArr = getFromLocalStorage();
