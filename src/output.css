@@ -625,6 +625,15 @@
   .ms-auto {
     margin-inline-start: auto;
   }
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
+  .mt-3 {
+    margin-top: calc(var(--spacing) * 3);
+  }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
   }
@@ -703,6 +712,12 @@
   }
   .max-h-\[150px\] {
     max-height: 150px;
+  }
+  .max-h-\[200px\] {
+    max-height: 200px;
+  }
+  .max-h-\[250px\] {
+    max-height: 250px;
   }
   .max-h-full {
     max-height: 100%;
@@ -1553,9 +1568,34 @@
       height: calc(var(--spacing) * 80);
     }
   }
+  .xl\:max-h-7 {
+    @media (width >= 80rem) {
+      max-height: calc(var(--spacing) * 7);
+    }
+  }
   .xl\:max-h-60 {
     @media (width >= 80rem) {
       max-height: calc(var(--spacing) * 60);
+    }
+  }
+  .xl\:max-h-72 {
+    @media (width >= 80rem) {
+      max-height: calc(var(--spacing) * 72);
+    }
+  }
+  .xl\:max-h-80 {
+    @media (width >= 80rem) {
+      max-height: calc(var(--spacing) * 80);
+    }
+  }
+  .xl\:max-h-\[300p\] {
+    @media (width >= 80rem) {
+      max-height: 300p;
+    }
+  }
+  .xl\:max-h-\[300px\] {
+    @media (width >= 80rem) {
+      max-height: 300px;
     }
   }
   .xl\:min-w-80 {
