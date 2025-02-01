@@ -18,6 +18,10 @@ const pokemonInfoArea = document.getElementById("pokemonInfoArea");
 const errorMessage = document.getElementById("errorMessage");
 const errorMessageText = document.getElementById("errorMessageText");
 const favoritesModalArea = document.getElementById("favoritesModalArea");
+const baseFormDisplayArea = document.getElementById("baseFormDisplayArea");
+const firstEvolutionDisplayArea = document.getElementById("firstEvolutionDisplayArea");
+const secondEvolutionDisplayArea = document.getElementById("secondEvolutionDisplayArea");
+const displayFavoritesBtn = document.getElementById("displayFavoritesBtn");
 
 
 // Variables
@@ -25,16 +29,18 @@ let userInput = "";
 let pokemon = {};
 let pokemonId = "";
 let localStorageElementsCount = 0;
+let favoritePokemonCount = 0;
+
 const errorMessageOutOfBounds = "This application showcases pokemon from Generations 1 through 5 (ID #s < 650). The pokemon you entered appears to be from a later generation. Try searching for a different Pokemon!";
 const errorMessageSearchQuery = "There was an issue with your search query. Please check the spelling of your query and try again."
 
 
 // Functions
-function saveToLocalStorage(pokemonId) {
+function saveToLocalStorage(pokemonName) {
     let favoritesListArr = getFromLocalStorage();
 
-    if (!favoritesListArr.includes(`${pokemonId}`)) {
-        favoritesListArr.push(`${pokemonId}`);
+    if (!favoritesListArr.includes(pokemonName)) {
+        favoritesListArr.push(pokemonName);
     }
 
     localStorage.setItem('Favorites', JSON.stringify(favoritesListArr));
@@ -50,14 +56,17 @@ function getFromLocalStorage() {
     return JSON.parse(localStorageData);
 }
 
-function removeFromLocalStorage() {
+function removeFromLocalStorage(inputPokemonName) {
     let localStorageData = getFromLocalStorage();
 
-    let idToRemove = localStorageData.indexOf(pokemonId);
+    let idToRemove = localStorageData.indexOf(inputPokemonName);
 
     localStorageData.splice(idToRemove, 1);
 
-    localStorage.setItem('Favorites', JSON.stringify(localStorageData))
+    localStorage.setItem('Favorites', JSON.stringify(localStorageData));
+    if(inputPokemonName == pokemonName.innerText) {
+        addToFavoritesBtn.classList.add("grayscale");
+    }
 }
 
 function getPokemonAbilitiesList(inputArray) {
@@ -119,72 +128,139 @@ function removeBackgroundColors(inputElementId) {
 function createFavoritesList() {
     let favoritesList = getFromLocalStorage();
     console.log(favoritesList);
-    favoriteModalArea.innerHTML = "";
-    favoritesList.map((starredCity) => {
-        // cardDiv.remove();
-        // favoriteCityCardsCount++;
-        console.log(favoriteCityCardsCount)
+    favoritesModalArea.innerHTML = "";
+    favoritesList.map((pokemonFaveListElement) => {
+        console.log(favoritePokemonCount)
         console.log(localStorageElementsCount);
-        if(favoriteCityCardsCount <= localStorageElementsCount) {
-            console.log(`${starredCity}`)
+        // if(favoritePokemonCount <= localStorageElementsCount) {
             
-            let cardDiv = document.createElement('div');
-            cardDiv.className = "favoritesListCard";
+            let pill = document.createElement('div');
+            pill.className = "rounded-full bg-pillGray flex justify-between items-center py-4 px-5";
             
-            let cityNameDiv = document.createElement('div');
             
-            let cityNameP = document.createElement('p');
-            cityNameP.className = "favoriteCityText";
-            cityNameP.innerText = searchStringToCityName(starredCity);
-            cityNameDiv.addEventListener('click', () => {
-                getWeatherData(starredCity);
-                getFiveDayForecast(starredCity);
+            let favePokemonName = document.createElement('p');
+            favePokemonName.className = "text-center text-xl font-montserrat";
+            favePokemonName.innerText = pokemonFaveListElement;
+            pill.addEventListener('click', async () => {
+                pokemon = await getPokemon(pokemonFaveListElement);
+                let favoritesListArr = getFromLocalStorage();
+                if (!favoritesListArr.includes(pokemon.name)) {
+                    addToFavoritesBtn.classList.add("grayscale");
+                } else {
+                    addToFavoritesBtn.classList.remove("grayscale");
+                }
+                pokemonId = `${pokemon.id}`;
+                    pokemonInfoArea.classList.remove("hidden");
+                    pokemonInfoArea.classList.add("grid");
+                    errorMessage.classList.add("hidden");
+                    errorMessage.classList.remove("flex");
+                    idNumber.innerText = `#${pokemon.id}`;
+                    pokemonName.innerText = `${pokemon.name}`;
+                    pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
+                    getPokemonTypes(pokemon);
+                    getEvolutionChain(pokemon);
+                    encounterText.innerText = await getLocationData(pokemon.id);
+                    abilitiesText.innerText = getPokemonAbilitiesList(pokemon.abilities);
+                    movesText.innerText = getPokemonMovesList(pokemon.moves);
             });
             
-            let filledFavoriteStar = document.createElement('img');
-            filledFavoriteStar.src = "./assets/images/favoriteIconFilled.svg";
-            filledFavoriteStar.alt = "Favorite Icon";
-            filledFavoriteStar.className = "favoriteIcon-Style";
+            let deletePokemonBtn = document.createElement('button');
+            deletePokemonBtn.className = "z-50";
+
+            let deletePokemonIcon = document.createElement('img');
+            deletePokemonIcon.src = "./assets/icons/delete.png";
+            deletePokemonIcon.alt = "Remove Pokemon from list";
+            deletePokemonIcon.className = "size-12";
             
-            filledFavoriteStar.addEventListener('click', function () {
-                // localStorageElementsCount--;
-                // favoriteCityCardsCount--;
-                removeFromLocalStorage(starredCity);
-                addFavoriteIcon.src = "./assets/images/favoriteIcon.svg";
-                cardDiv.remove();
-            })
+            deletePokemonBtn.addEventListener('click', function () {
+                removeFromLocalStorage(favePokemonName.innerText);
+                pill.remove();
+            });
     
-            let weatherDiv = document.createElement('div');
+            favoritesModalArea.appendChild(pill);
     
-            let weatherP = document.createElement('p');
-            weatherP.className = "favoriteCityWeatherText";
-            // weatherP.innerText = `${Math.round(starredCityData.main.temp_max)}° / ${Math.round(starredCityData.main.temp_min)}°`
+            pill.appendChild(favePokemonName);
+            pill.appendChild(deletePokemonBtn);
     
-            offcanvasCardArea.appendChild(cardDiv);
-    
-            cardDiv.appendChild(cityNameDiv);
-            cardDiv.appendChild(filledFavoriteStar);
-            cardDiv.appendChild(weatherDiv);
-    
-            cityNameDiv.appendChild(cityNameP);
-            weatherDiv.appendChild(weatherP);
+            deletePokemonBtn.appendChild(deletePokemonIcon);
         }
-    })
+    )
+    // }
 }
 
-// const getEvolutionChain = async (pokemon) => {
-//     console.log(pokemon.species.url);
-//     const speciesUrl = pokemon.species.url;
-//     const response = await fetch(speciesUrl);
-//     const speciesData = await response.json();
-//     console.log(speciesData);
-//     console.log(speciesData.evolution_chain.url);
-//     const evolutionChainUrl = speciesData.evolution_chain.url;
-//     const evolutionChainResponse = await fetch(evolutionChainUrl);
-//     const evolutionChain = await evolutionChainResponse.json();
-//     console.log(evolutionChain);
-//     const evolutionChain.chain.species.url
-// }
+const onLoadDisplay = async (inputPokemonStr) => {
+    pokemon = await getPokemon(inputPokemonStr);
+    let favoritesListArr = getFromLocalStorage();
+    if (!favoritesListArr.includes(pokemon.name)) {
+        addToFavoritesBtn.classList.add("grayscale");
+    } else {
+        addToFavoritesBtn.classList.remove("grayscale");
+    }
+    pokemonId = `${pokemon.id}`;
+        pokemonInfoArea.classList.remove("hidden");
+        pokemonInfoArea.classList.add("grid");
+        errorMessage.classList.add("hidden");
+        errorMessage.classList.remove("flex");
+        idNumber.innerText = `#${pokemon.id}`;
+        pokemonName.innerText = `${pokemon.name}`;
+        pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
+        getPokemonTypes(pokemon);
+        getEvolutionChain(pokemon);
+        encounterText.innerText = await getLocationData(pokemon.id);
+        abilitiesText.innerText = getPokemonAbilitiesList(pokemon.abilities);
+        movesText.innerText = getPokemonMovesList(pokemon.moves);
+
+}
+
+
+
+
+const getEvolutionChain = async (pokemon) => {
+    console.log(pokemon.species.url);
+    const speciesUrl = pokemon.species.url;
+    const response = await fetch(speciesUrl);
+    const speciesData = await response.json();
+    console.log(speciesData);
+    console.log(speciesData.evolution_chain.url);
+    const evolutionChainUrl = speciesData.evolution_chain.url;
+    const evolutionChainResponse = await fetch(evolutionChainUrl);
+    const evolutionChain = await evolutionChainResponse.json();
+    console.log(evolutionChain);
+    const firstEvolution = await getPokemon(evolutionChain.chain.species.name);
+    baseFormDisplayArea.innerHTML = "";
+    firstEvolutionDisplayArea.innerHTML = "";
+    secondEvolutionDisplayArea.innerHTML = "";
+    let firstEvo =  document.createElement('img'); 
+    firstEvo.src = `${firstEvolution.sprites.other["official-artwork"].front_default}`;
+    firstEvo.alt = "Base Form";
+    firstEvo.className = "xl:size-40 size-20"
+    baseFormDisplayArea.appendChild(firstEvo);
+
+    for(let i = 0; i < evolutionChain.chain.evolves_to.length; i++) {
+        const secondEvolution = await getPokemon(evolutionChain.chain.evolves_to[i].species.name);
+        if(secondEvolution.id <= 649) {
+            let secondEvo =  document.createElement('img'); 
+            secondEvo.src = `${secondEvolution.sprites.other["official-artwork"].front_default}`;
+            secondEvo.alt = "First evolution";
+            secondEvo.className = "xl:size-40 size-20"
+            firstEvolutionDisplayArea.appendChild(secondEvo);
+        }
+        
+        for(let j = 0; j < evolutionChain.chain.evolves_to[i].evolves_to.length; j++) {
+            const thirdEvolution = await getPokemon(evolutionChain.chain.evolves_to[i].evolves_to[j].species.name);
+            if(thirdEvolution.id <= 649) {
+                let thirdEvo =  document.createElement('img'); 
+                thirdEvo.src = `${thirdEvolution.sprites.other["official-artwork"].front_default}`;
+                thirdEvo.alt = "First evolution";
+                thirdEvo.className = "xl:size-40 size-20"
+                secondEvolutionDisplayArea.appendChild(thirdEvo);
+            }
+    
+        }
+    }
+    
+
+}
 
 // Event Listeners
 searchBtn.addEventListener("click", async () => {
@@ -198,6 +274,12 @@ searchBtn.addEventListener("click", async () => {
         errorMessage.classList.add("flex");
         errorMessageText.innerText = errorMessageSearchQuery;
     } else if(parseInt(pokemonId) <= 649) {
+        let favoritesListArr = getFromLocalStorage();
+        if (!favoritesListArr.includes(pokemon.name)) {
+            addToFavoritesBtn.classList.add("grayscale");
+        } else {
+            addToFavoritesBtn.classList.remove("grayscale");
+        }
         pokemonInfoArea.classList.remove("hidden");
         pokemonInfoArea.classList.add("grid");
         errorMessage.classList.add("hidden");
@@ -207,7 +289,7 @@ searchBtn.addEventListener("click", async () => {
         pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
         getPokemonTypes(pokemon);
 
-        // getEvolutionChain(pokemon);
+        getEvolutionChain(pokemon);
 
         encounterText.innerText = await getLocationData(pokemon.id);
         abilitiesText.innerText = getPokemonAbilitiesList(pokemon.abilities);
@@ -216,7 +298,7 @@ searchBtn.addEventListener("click", async () => {
         pokemonInfoArea.classList.add("hidden");
         pokemonInfoArea.classList.remove("grid");
 
-        // getEvolutionChain(pokemon);
+        getEvolutionChain(pokemon);
 
         errorMessage.classList.remove("hidden");
         errorMessage.classList.add("flex");
@@ -224,9 +306,19 @@ searchBtn.addEventListener("click", async () => {
     }
 });
 
+displayFavoritesBtn.addEventListener("click", () => {
+    createFavoritesList();
+});
+
 getRandomPokemonBtn.addEventListener("click", async () => {
         let randomId = Math.floor(Math.random() * 650);
         pokemon = await getPokemon(randomId);
+        let favoritesListArr = getFromLocalStorage();
+        if (!favoritesListArr.includes(pokemon.name)) {
+            addToFavoritesBtn.classList.add("grayscale");
+        } else {
+            addToFavoritesBtn.classList.remove("grayscale");
+        }
         pokemonId = `${pokemon.id}`;
             pokemonInfoArea.classList.remove("hidden");
             pokemonInfoArea.classList.add("grid");
@@ -236,6 +328,7 @@ getRandomPokemonBtn.addEventListener("click", async () => {
             pokemonName.innerText = `${pokemon.name}`;
             pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
             getPokemonTypes(pokemon);
+            getEvolutionChain(pokemon);
             encounterText.innerText = await getLocationData(pokemon.id);
             abilitiesText.innerText = getPokemonAbilitiesList(pokemon.abilities);
             movesText.innerText = getPokemonMovesList(pokemon.moves);
@@ -260,11 +353,11 @@ addToFavoritesBtn.addEventListener("click", () => {
     if (addToFavoritesBtn.classList.contains("grayscale") && (userInput != "")) {
         addToFavoritesBtn.classList.remove("grayscale");
         addToFavoritesBtn.classList.remove("opacity-50");
-        saveToLocalStorage(pokemonId);
+        saveToLocalStorage(pokemonName.innerText);
     } else {
         addToFavoritesBtn.classList.add("grayscale");
         addToFavoritesBtn.classList.add("opacity-50");
-        removeFromLocalStorage(pokemonId);
+        removeFromLocalStorage(pokemonName.innerText);
         localStorageElementsCount--;
     }
 });
@@ -289,3 +382,5 @@ const getLocationData = async (inputIdNumber) => {
         return "N/A";
     }
 }
+
+onLoadDisplay("bulbasaur");
