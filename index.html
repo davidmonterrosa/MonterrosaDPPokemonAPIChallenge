@@ -12,23 +12,23 @@
 
 </head>
 <body class="bg-[url(/assets/images/Pokemon_Background.jpg)] bg-center bg-no-repeat bg-cover bg-fixed">
-    <main class="grid md:grid-cols-5 md:grid-rows-8">
+    <main class="grid my-8 mx-4 md:my-0 md:mx-0 md:grid-cols-5 md:grid-rows-8">
         
         <!-- Searchbar, Favorites List Btn, and getRandomPokemon Btn -->
-        <header class="md:col-start-2 md:col-span-3 md:row-start-2">
+        <header class="mb-4 md:mb-8 xl:mb-5 md:col-start-2 md:col-span-3 md:row-start-2">
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-            <div class="flex justify-evenly grid-rows-1 py-4 ps-20 pe-32 md:ps-20 bg-white/75 border rounded-2xl">
-                <div class=" inset-y-0 start-0 flex items-center ps-3">
+            <div class="flex justify-evenly py-4 bg-white/75  rounded-2xl">
+                <div class=" inset-y-0 start-0 flex items-center ps-3 px-4 hover:cursor-pointer hover:bg-slate-500 hover:border hover:rounded-2xl">
                     <button id="searchBtn">
                         <img class="w-[1.563rem] h-[1.563rem] md:w-[3.125rem] md:h-[3.125rem]" src="./assets/icons/magnifying_glass.svg" alt="magnifying glass icon">
                     </button>
                 </div>
-                <input type="search" id="inputField" class="block w-full md:h-[108px] text-base md:text-2xl text-gray-900 bg-transparent border-0 rounded-2xl   dark:placeholder-gray-400 dark:text-white font-montserrat md:placeholder:font-montserrat md:placeholder:text-2xl" placeholder="Search by name or Pokedex Number" required />
-                <button id="displayFavoritesBtn" data-modal-target="default-modal" data-modal-toggle="default-modal" type="button" class="end-18 bottom-5 md:end-18 md:bottom-7">
-                    <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/pokeball.png" alt="Favorites List Pokeball Icon">
+                <input type="search" id="inputField" class="block w-6/10 md:h-[108px] md:text-2xl text-gray-900 bg-transparent border-0 rounded-2xl  font-montserrat md:placeholder:font-montserrat md:placeholder:text-2xl" placeholder="Search by name or Pokedex Number" required />
+                <button id="displayFavoritesBtn" data-modal-target="default-modal" data-modal-toggle="default-modal" type="button" class="px-4 end-18 bottom-5 md:end-18 md:bottom-7 hover:cursor-pointer hover:border hover:rounded-2xl hover:bg-slate-500">
+                    <img class="size-10 md:size-14 " src="./assets/icons/pokeball.png" alt="Favorites List Pokeball Icon">
                 </button>   
-                <button id="getRandomPokemonBtn" class=" end-2.5 bottom-5 md:end-3 md:bottom-7">
-                    <img class="w-6 h-6 md:w-14 md:h-14" src="./assets/icons/shuffle-solid.svg" alt="Get Random Pokemon Shuffle icon">
+                <button id="getRandomPokemonBtn" class="px-4 end-2.5 bottom-5 md:end-3 md:bottom-7 hover:border hover:rounded-2xl hover:bg-slate-500">
+                    <img class="size-10 md:size-14" src="./assets/icons/shuffle-solid.svg" alt="Get Random Pokemon Shuffle icon">
                 </button>
             </div>
         </header>
@@ -66,14 +66,14 @@
         <!-- Pokemon Information Area -->
         <section id="pokemonInfoArea" class="grid auto-rows-min md:row-start-3 md:row-span-5 md:col-start-2 md:col-span-3 bg-white/75 rounded-2xl p-8">
             <div class="flex justify-between">
-                <img id="addToFavoritesBtn" class="w-16 grayscale opacity-50" src="./assets/icons/pokeball.png" alt="Favorite Btn Pokeball">
-                <p id="idNumber">#Id</p>
-                <img id="toggleShinyBtn" class="w-16" src="./assets/icons/shining.png" alt="Toggle shiny view button icon">
+                <img id="addToFavoritesBtn" class="w-16 grayscale opacity-50 hover:cursor-pointer hover:opacity-100" src="./assets/icons/pokeball.png" alt="Favorite Btn Pokeball">
+                <p id="idNumber" class="text-2xl">#Id</p>
+                <img id="toggleShinyBtn" class="w-16 opacity-50 hover:opacity-80 hover:cursor-pointer" src="./assets/icons/shining.png" alt="Toggle shiny view button icon">
             </div>
             <article class=" xl:grid xl:grid-cols-2">
                 <!-- Name, Sprite, and Type Area -->
                 <div class="grid grid-cols-1 auto-rows-3 xl:col-start-1 place-items-center">
-                    <h1 id="pokemonName">Pokemon Name</h1>
+                    <h1 id="pokemonName" class="text-2xl font-poppins">Pokemon Name</h1>
                     <!-- <img src="" alt=""> -->
                     <img id="pokemonSprite" class="object-cover w-64 h-64 xl:min-w-80 xl:h-80 rounded-2xl" src="./assets/images/image.png" alt="Pokemon Placeholder">
                     <div id="typeListArea" class="flex justify-center">

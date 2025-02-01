@@ -8,3 +8,6 @@
     src: url("../assets/fonts/Poppins/Poppins-Regular.ttf");
 }
 
+.overflow-y-scroll {
+    scrollbar-color: #5E5E5E transparent;
+}

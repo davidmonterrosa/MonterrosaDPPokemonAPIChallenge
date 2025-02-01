@@ -66,6 +66,7 @@ function removeFromLocalStorage(inputPokemonName) {
     localStorage.setItem('Favorites', JSON.stringify(localStorageData));
     if(inputPokemonName == pokemonName.innerText) {
         addToFavoritesBtn.classList.add("grayscale");
+        addToFavoritesBtn.classList.add("opacity-50");
     }
 }
 
@@ -146,8 +147,10 @@ function createFavoritesList() {
                 let favoritesListArr = getFromLocalStorage();
                 if (!favoritesListArr.includes(pokemon.name)) {
                     addToFavoritesBtn.classList.add("grayscale");
+                    addToFavoritesBtn.classList.add("opacity-50");
                 } else {
                     addToFavoritesBtn.classList.remove("grayscale");
+                    addToFavoritesBtn.classList.remove("opacity-50");
                 }
                 pokemonId = `${pokemon.id}`;
                     pokemonInfoArea.classList.remove("hidden");
@@ -195,6 +198,7 @@ const onLoadDisplay = async (inputPokemonStr) => {
         addToFavoritesBtn.classList.add("grayscale");
     } else {
         addToFavoritesBtn.classList.remove("grayscale");
+        addToFavoritesBtn.classList.remove("opacity-50");
     }
     pokemonId = `${pokemon.id}`;
         pokemonInfoArea.classList.remove("hidden");
@@ -233,7 +237,7 @@ const getEvolutionChain = async (pokemon) => {
     let firstEvo =  document.createElement('img'); 
     firstEvo.src = `${firstEvolution.sprites.other["official-artwork"].front_default}`;
     firstEvo.alt = "Base Form";
-    firstEvo.className = "xl:size-40 size-20"
+    firstEvo.className = "xl:size-40 size-30"
     baseFormDisplayArea.appendChild(firstEvo);
 
     for(let i = 0; i < evolutionChain.chain.evolves_to.length; i++) {
@@ -242,7 +246,7 @@ const getEvolutionChain = async (pokemon) => {
             let secondEvo =  document.createElement('img'); 
             secondEvo.src = `${secondEvolution.sprites.other["official-artwork"].front_default}`;
             secondEvo.alt = "First evolution";
-            secondEvo.className = "xl:size-40 size-20"
+            secondEvo.className = "xl:size-40 size-30"
             firstEvolutionDisplayArea.appendChild(secondEvo);
         }
         
@@ -252,7 +256,7 @@ const getEvolutionChain = async (pokemon) => {
                 let thirdEvo =  document.createElement('img'); 
                 thirdEvo.src = `${thirdEvolution.sprites.other["official-artwork"].front_default}`;
                 thirdEvo.alt = "First evolution";
-                thirdEvo.className = "xl:size-40 size-20"
+                thirdEvo.className = "xl:size-40 size-30"
                 secondEvolutionDisplayArea.appendChild(thirdEvo);
             }
     
@@ -274,11 +278,14 @@ searchBtn.addEventListener("click", async () => {
         errorMessage.classList.add("flex");
         errorMessageText.innerText = errorMessageSearchQuery;
     } else if(parseInt(pokemonId) <= 649) {
+        toggleShinyBtn.src = "./assets/icons/shining.png"
         let favoritesListArr = getFromLocalStorage();
         if (!favoritesListArr.includes(pokemon.name)) {
             addToFavoritesBtn.classList.add("grayscale");
+            addToFavoritesBtn.classList.add("opacity-50");
         } else {
             addToFavoritesBtn.classList.remove("grayscale");
+            addToFavoritesBtn.classList.remove("opacity-50");
         }
         pokemonInfoArea.classList.remove("hidden");
         pokemonInfoArea.classList.add("grid");
@@ -316,8 +323,10 @@ getRandomPokemonBtn.addEventListener("click", async () => {
         let favoritesListArr = getFromLocalStorage();
         if (!favoritesListArr.includes(pokemon.name)) {
             addToFavoritesBtn.classList.add("grayscale");
+            addToFavoritesBtn.classList.add("opacity-50");
         } else {
             addToFavoritesBtn.classList.remove("grayscale");
+            addToFavoritesBtn.classList.remove("opacity-50");
         }
         pokemonId = `${pokemon.id}`;
             pokemonInfoArea.classList.remove("hidden");
@@ -342,9 +351,11 @@ toggleShinyBtn.addEventListener("click", () => {
     
     if (toggleShinyBtn.src.includes("shining.png") && (userInput != "")) {
         toggleShinyBtn.src = "./assets/icons/shining_filled.png";
+        toggleShinyBtn.classList.remove("opacity-50");
         pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_shiny}`;
     } else {
         toggleShinyBtn.src = "./assets/icons/shining.png";
+        toggleShinyBtn.classList.add("opacity-50");
         pokemonSprite.src = `${pokemon.sprites.other["official-artwork"].front_default}`;
     }
 });
